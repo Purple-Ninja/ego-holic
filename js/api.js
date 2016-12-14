@@ -11,7 +11,7 @@ var API = (function() {
                 insertNewCard( data );
             },
             error: function( data ) {
-                // error handling here
+                insertNewCard( data.msg );
             }
         });
     };
