@@ -3,6 +3,6 @@ $( document ).ready(function() {
         e.stopPropagation();
         e.preventDefault();
 
-        console.log("you pressed the button!");
+        API.fetch($('input').val());
     })
 })
