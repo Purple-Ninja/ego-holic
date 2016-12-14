@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const request = require('request');
+const cheerio = require('cheerio');
 const querystring = require('querystring');
 const _ = require('lodash');
 const port = process.env.PORT || 9527;
@@ -15,6 +16,19 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req,res) => {
     res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/getImage', (req, res) => {
+
+    request(_.get(req, 'query.url', ''), (err, response, body) => {
+        if (!err && response.statusCode == 200) {
+            let $ = cheerio.load(body);
+            let img = $("#title-overview-widget > div.minPosterWithPlotSummaryHeight > div.poster > a > img").attr('src');
+            res.json({imgUrl: img});
+        } else {
+            res.end();
+        }
+    });
 });
 
 app.get('/getBestMoment', (req, res) => {
