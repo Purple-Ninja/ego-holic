@@ -6,12 +6,13 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const querystring = require('querystring');
 const _ = require('lodash');
-const port = process.env.PORT || 9527;
+const config = require('config');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(express.static(__dirname + '/public'));
+
+app.set('port', process.env.PORT || 5000);
 
 app.get('/', (req,res) => {
     res.sendFile(__dirname + '/index.html');
@@ -29,6 +30,6 @@ app.get('/getBestMoment', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log('Listening on port', port);
+app.listen(app.get('port'), () => {
+    console.log('Listening on port', app.get('port'));
 });
