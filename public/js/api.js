@@ -1,9 +1,8 @@
 var API = (function() {
 
-    var hostname = 'https://ego-holic.herokuapp.com';
+    var hostname = 'http://hack.wjhuang.net:5678';
     var getCardUrl = hostname + '/getBestMoment?q=';
     var getImageUrl = hostname + '/getImage?url=';
-    var cache = {};
 
     var fetch = function( query ) {
         $.get(getCardUrl + query, function( data ) {
@@ -18,22 +17,12 @@ var API = (function() {
 
         if ( data.status === 'success' ) {
 
-            var newCard;
-
-            if (cache.hasOwnProperty(data.movie.url)) {
-                newCard = '<div class="card"><div class="card-img"><h2>' + data.movie.title + '</h2><img src="' + cache[data.movie.url] + '"></div></div>';
-            } else {
-                newCard = '<div class="card"><div class="card-img"><h2>' + data.movie.title + '</h2><img src=""></div></div>';
-            }
-
+            var newCard = '<div class="card"><div class="card-img"><h2>' + data.movie.title + '</h2><img src=""></div></div>';
             $('.ui-content').append(newCard);
 
             $.get( getImageUrl + data.movie.url, function( imgData ) {
                 // update the image URL
                 $('.ui-content img').attr('src', imgData.imgUrl);
-
-                // update cache
-                cache[data.movie.url] = imgData.imgUrl;
             });
         } else {
             // no result

@@ -23,7 +23,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 5678);
+
+let cache = {};
 
 app.get('/', (req,res) => {
     res.sendFile(__dirname + '/index.html');
@@ -31,15 +33,25 @@ app.get('/', (req,res) => {
 
 app.get('/getImage', (req, res) => {
 
-    request(_.get(req, 'query.url', ''), (err, response, body) => {
+    let reqUrl = _.get(req, 'query.url', '');
+
+    if (cache.hasOwnProperty(reqUrl)) {
+        res.json({imgUrl: cache[reqUrl]});
+    } else {
+        request(reqUrl, (err, response, body) => {
         if (!err && response.statusCode == 200) {
             let $ = cheerio.load(body);
             let img = $("#title-overview-widget > div.minPosterWithPlotSummaryHeight > div.poster > a > img").attr('src');
+
+            // update cache
+            cache[reqUrl] = img;
+
             res.json({imgUrl: img});
         } else {
             res.end();
         }
     });
+    }
 });
 
 app.get('/getBestMoment', (req, res) => {
