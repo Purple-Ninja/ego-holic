@@ -20,6 +20,7 @@
     "body-parser": "^1.15.2",
     "cheerio": "^0.22.0",
     "config": "^1.24.0",
+    "emojione": "^2.2.7",
     "express": "^4.14.0",
     "lodash": "^4.17.2",
     "request": "^2.79.0"

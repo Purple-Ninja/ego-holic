@@ -14,6 +14,12 @@
     <!-- Include the jQuery Mobile library -->
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
+    <!-- Lazyload -->
+    <script src="js/jquery.lazyload.min.js"></script>
+    <script src="js/emojione.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.2/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/async/2.1.4/async.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/spinner.css">
@@ -23,13 +29,16 @@
     <div data-role="page">
 
         <div class="title" data-role="header">
-            <h1><i class="fa fa-users fa-2x"></i> Best Moment</h1>
+            <h1>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span>Best Moment</span>
+                <div class="spinner hide"></div>
+            </h1>
         </div>
         <div class="searchbox">
             <form>
-                <input type="text" name="query" placeholder="Tell me your mood">
-                <button id="submit-btn" class="ui-btn" type="submit">Send</button>
-                <div class="spinner hide"></div>
+                <input type="text" id="input-bar" name="query" placeholder="Tell me your mood">
+                <button id="submit-btn" type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
         <div data-role="main" class="ui-content">

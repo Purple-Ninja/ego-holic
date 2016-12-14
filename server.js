@@ -8,6 +8,7 @@ const cheerio = require('cheerio');
 const querystring = require('querystring');
 const _ = require('lodash');
 const config = require('config');
+const emojione = require('emojione');
 
 // For Facebook Bot
 const VALIDATION_TOKEN = process.env.MESSENGER_VALIDATION_TOKEN || config.get('validationToken');
@@ -55,7 +56,12 @@ app.get('/getImage', (req, res) => {
 });
 
 app.get('/getBestMoment', (req, res) => {
-    var qs = querystring.stringify({ q: _.get(req, 'query.q', '') });
+
+    // process emojione
+    var query = _.get(req, 'query.q', '');
+    var emojiText = emojione.toShort(query).replace(/:/g, '');
+
+    var qs = querystring.stringify({ q: emojiText });
     var reqUrl = 'http://52.198.213.105/getBestMoment.php?'+qs;
     request(reqUrl, (err, response, body) => {
         if (!err && response.statusCode == 200) {
