@@ -17,10 +17,11 @@ var API = (function() {
 
         if ( data.status === 'success' ) {
 
-            var newCard = '<div class="card"><div class="card-img"><h2>' + data.movie.title + '</h2><img src=""></div></div>';
+            var newCard = '<div class="card"><div class="card-img"><h2>' + data.movie.title + '</h2><div class="spinner"></div><img src=""></div></div>';
             $('.ui-content').append(newCard);
 
             $.get( getImageUrl + data.movie.url, function( imgData ) {
+                $('.spinner').remove();
                 // update the image URL
                 $('.ui-content img').attr('src', imgData.imgUrl);
             });
