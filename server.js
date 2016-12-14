@@ -9,6 +9,7 @@ const _ = require('lodash');
 const config = require('config');
 const fbot = require('./lib/facebook-bot');
 
+
 // For Facebook Bot
 const VALIDATION_TOKEN = process.env.MESSENGER_VALIDATION_TOKEN || config.get('validationToken');
 const APP_SECRET = process.env.MESSENGER_APP_SECRET || config.get('appSecret');
@@ -18,6 +19,8 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
   console.error('Missing config values');
   process.exit(1);
 }
+
+fbot.setToken('PAGE_ACCESS_TOKEN', PAGE_ACCESS_TOKEN);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
