@@ -1,6 +1,6 @@
 var API = (function() {
 
-    var hostname = 'https://ego-holic.herokuapp.com:5678';
+    var hostname = 'https://ego-holic.herokuapp.com';
     var getCardUrl = hostname + '/getBestMoment?q=';
     var getImageUrl = hostname + '/getImage?url=';
 
