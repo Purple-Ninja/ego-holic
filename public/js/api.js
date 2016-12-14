@@ -1,8 +1,7 @@
 var API = (function() {
 
-    var hostname = 'https://ego-holic.herokuapp.com';
-    var getCardUrl = hostname + '/getBestMoment?q=';
-    var getImageUrl = hostname + '/getImage?url=';
+    var getCardUrl = '/getBestMoment?q=';
+    var getImageUrl = '/getImage?url=';
 
     var fetch = function( query ) {
         $.get(getCardUrl + query, function( data ) {
@@ -11,18 +10,39 @@ var API = (function() {
         );
     };
 
+    var Card = function () {
+        var self = this;
+        self.container = $('<div></div>').addClass('card');
+        self.components = {};
+
+        self.add = function (components) {
+            components.forEach(function(component){
+                var tag = component === 'img' ? '<img></img>' : '<div></div>';
+                self.components[component] = $(tag).addClass('card-'+ component).appendTo(self.container);
+            });
+        };
+        self.mount = function (entry) {
+            $(entry).append(self.container);
+        };
+    };
+
     var insertNewCard = function( data ) {
 
         $('.ui-content').empty();
 
         if ( data.status === 'success' ) {
 
-            var newCard = '<div class="card"><div class="card-img"><h2>' + data.movie.title + '</h2><img src=""></div></div>';
-            $('.ui-content').append(newCard);
+            var newCard;
+            var entity = data.movie;
+            var card = new Card();
 
-            $.get( getImageUrl + data.movie.url, function( imgData ) {
-                // update the image URL
-                $('.ui-content img').attr('src', imgData.imgUrl);
+            card.add(['title', 'tag', 'img']);
+            card.mount('.ui-content');
+
+            card.components.title.text(entity.title);
+            
+            $.get( getImageUrl + entity.url, function( imgData ) {
+                card.components.img.attr('src', imgData.imgUrl);
             });
         } else {
             // no result
