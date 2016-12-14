@@ -1,0 +1,23 @@
+{
+  "name": "ego-holic",
+  "version": "1.0.0",
+  "description": "> Reach out to the alter ego.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Purple-Ninja/ego-holic.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Purple-Ninja/ego-holic/issues"
+  },
+  "homepage": "https://github.com/Purple-Ninja/ego-holic#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}
