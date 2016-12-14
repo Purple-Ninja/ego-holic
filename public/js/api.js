@@ -3,6 +3,7 @@ var API = (function() {
     var hostname = 'https://ego-holic.herokuapp.com';
     var getCardUrl = hostname + '/getBestMoment?q=';
     var getImageUrl = hostname + '/getImage?url=';
+    var cache = {};
 
     var fetch = function( query ) {
         $.get(getCardUrl + query, function( data ) {
@@ -17,10 +18,22 @@ var API = (function() {
 
         if ( data.status === 'success' ) {
 
-            $.get( getImageUrl + data.movie.url, function( imgData ) {
-                var newCard = '<div class="card"><div class="card-img"><h2>' + data.recipe.title + '</h2><img src="' + imgData.imgUrl + '"></div></div>';
+            var newCard;
 
-                $('.ui-content').append(newCard);
+            if (cache.hasOwnProperty(data.movie.url)) {
+                newCard = '<div class="card"><div class="card-img"><h2>' + data.recipe.title + '</h2><img src="' + cache[data.movie.url] + '"></div></div>';
+            } else {
+                newCard = '<div class="card"><div class="card-img"><h2>' + data.recipe.title + '</h2><img src=""></div></div>';
+            }
+
+            $('.ui-content').append(newCard);
+
+            $.get( getImageUrl + data.movie.url, function( imgData ) {
+                // update the image URL
+                $('.ui-content img').attr('src', imgData.imgUrl);
+
+                // update cache
+                cache[data.movie.url] = imgData.imgUrl;
             });
         } else {
             // no result
