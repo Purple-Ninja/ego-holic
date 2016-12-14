@@ -21,9 +21,9 @@ var API = (function() {
             var newCard;
 
             if (cache.hasOwnProperty(data.movie.url)) {
-                newCard = '<div class="card"><div class="card-img"><h2>' + data.recipe.title + '</h2><img src="' + cache[data.movie.url] + '"></div></div>';
+                newCard = '<div class="card"><div class="card-img"><h2>' + data.movie.title + '</h2><img src="' + cache[data.movie.url] + '"></div></div>';
             } else {
-                newCard = '<div class="card"><div class="card-img"><h2>' + data.recipe.title + '</h2><img src=""></div></div>';
+                newCard = '<div class="card"><div class="card-img"><h2>' + data.movie.title + '</h2><img src=""></div></div>';
             }
 
             $('.ui-content').append(newCard);
