@@ -1,0 +1,8 @@
+.card-img h2 {
+    font-size: 1.2em;
+}
+
+.card-img img {
+    width: 100%;
+    border-radius: 5px;
+}
