@@ -1,14 +1,30 @@
 var API = (function() {
 
-    var hostname = 'https://ego-holic.herokuapp.com';
-    var getCardUrl = hostname + '/getBestMoment?q=';
-    var getImageUrl = hostname + '/getImage?url=';
+    var getCardUrl = '/getBestMoment?q=';
+    var getImageUrl = '/getImage?url=';
 
     var fetch = function( query ) {
+        $('.spinner').toggleClass('hide');
         $.get(getCardUrl + query, function( data ) {
                 insertNewCard( data );
             }
         );
+    };
+
+    var Card = function () {
+        var self = this;
+        self.container = $('<div></div>').addClass('card');
+        self.components = {};
+
+        self.add = function (components) {
+            components.forEach(function(component){
+                var tag = component === 'img' ? '<img></img>' : '<div></div>';
+                self.components[component] = $(tag).addClass('card-'+ component).appendTo(self.container);
+            });
+        };
+        self.mount = function (entry) {
+            $(entry).append(self.container);
+        };
     };
 
     var insertNewCard = function( data ) {
@@ -16,14 +32,18 @@ var API = (function() {
         $('.ui-content').empty();
 
         if ( data.status === 'success' ) {
+            var newCard;
+            var entity = data.movie;
+            var card = new Card();
 
-            var newCard = '<div class="card"><div class="card-img"><h2>' + data.movie.title + '</h2><div class="spinner"></div><img src=""></div></div>';
-            $('.ui-content').append(newCard);
+            card.add(['title', 'tag', 'img']);
+            
 
-            $.get( getImageUrl + data.movie.url, function( imgData ) {
-                $('.spinner').remove();
-                // update the image URL
-                $('.ui-content img').attr('src', imgData.imgUrl);
+            $.get( getImageUrl + entity.url, function( imgData ) {
+                $('.spinner').toggleClass('hide');
+                card.components.title.text(entity.title);
+                card.components.img.attr('src', imgData.imgUrl);
+                card.mount('.ui-content');
             });
         } else {
             // no result
