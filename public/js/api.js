@@ -18,8 +18,7 @@ var API = (function() {
         var tag;
         self.add = function (components) {
             components.forEach(function(component){
-                // var tag = component === 'img' ? '<img></img>' : '<div></div>';
-                tag = '<div></div>';
+                tag = component === 'title' ? '<a></a>' : '<div></div>';
                 self.components[component] = $(tag).addClass('card-'+ component).appendTo(self.container);
             });
         };
@@ -42,6 +41,7 @@ var API = (function() {
         card.components.group.html(groupIcons[entity.type]);
 
         card.components.title.text(entity.title);
+        card.components.title.attr('href', entity.url);
         card.components.tag.text(entity.tag);
         card.components.description.text(entity.description);
 
