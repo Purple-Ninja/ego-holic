@@ -62,7 +62,7 @@ app.get('/getBestMoment', (req, res) => {
     var emojiText = emojione.toShort(query).replace(/:/g, '');
 
     var qs = querystring.stringify({ q: emojiText });
-    var reqUrl = 'http://52.198.213.105/getBestMoment.php?'+qs;
+    var reqUrl = 'http://52.198.213.105/getBestMoment2.php?'+qs;
     request(reqUrl, (err, response, body) => {
         if (!err && response.statusCode == 200) {
             res.json(JSON.parse(body));
