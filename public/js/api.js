@@ -77,8 +77,10 @@ var API = (function() {
             async.map(groups, insertNewCard, function(err, results) {
                 console.log('>>> done');
                 // lazy load image
-                $('.lazy').lazyload({ effect : "fadeIn" });
-                $('.spinner').removeClass('hide').addClass('hide');
+                setTimeout(function(){
+                    $('.lazy').lazyload({ effect : "fadeIn" });
+                    $('.spinner').removeClass('hide').addClass('hide');
+                }, 50);
             });
 
         } else {
