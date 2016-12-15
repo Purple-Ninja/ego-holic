@@ -86,6 +86,7 @@ var API = (function() {
             // no result
             var newCard = '<div class="card"><div class="card-img"><h2>No Result</h2></div></div>';
             $('.ui-content').append(newCard);
+            $('.spinner').removeClass('hide').addClass('hide');
         }
     };
 
