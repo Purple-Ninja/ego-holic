@@ -80,7 +80,7 @@ var API = (function() {
                 setTimeout(function(){
                     $('.lazy').lazyload({ effect : "fadeIn" });
                     $('.spinner').removeClass('hide').addClass('hide');
-                }, 50);
+                }, 0);
             });
 
         } else {
