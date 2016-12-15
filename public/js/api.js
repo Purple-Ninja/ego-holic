@@ -45,16 +45,14 @@ var API = (function() {
         card.components.tag.text(entity.tag);
         card.components.description.text(entity.description);
 
-        var error = null;
         $.get( getImageUrl + entity.url, function( imgData ) {
             if (imgData.imgUrl) {
                 card.components.img.attr('data-original', imgData.imgUrl);
                 card.components.img.addClass('lazy');
             } else {
-                error = 'no image';
             }
             card.mount('.ui-content');
-            callback(error, entity.type);
+            callback(null, entity.type);
         });
     }
 
@@ -75,12 +73,13 @@ var API = (function() {
                             });
 
             async.map(groups, insertNewCard, function(err, results) {
-                console.log('>>> done');
+                console.log('>>> async done');
                 // lazy load image
                 setTimeout(function(){
                     $('.lazy').lazyload({ effect : "fadeIn" });
                     $('.spinner').removeClass('hide').addClass('hide');
-                }, 0);
+                    console.log('>>> lazy done');
+                }, 50);
             });
 
         } else {
