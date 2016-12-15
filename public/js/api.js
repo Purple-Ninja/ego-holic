@@ -84,8 +84,9 @@ var API = (function() {
 
         } else {
             // no result
-            var newCard = '<div class="card"><div class="card-img"><h2>No Result</h2></div></div>';
+            var newCard = '<div class="card"><div class="card-img"><h2>Oops, no result. Please try another keyword :(</h2></div></div>';
             $('.ui-content').append(newCard);
+            $('.spinner').removeClass('hide').addClass('hide');
         }
     };
 
